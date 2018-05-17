@@ -49,7 +49,7 @@ rsync -avhPR --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r --stats --log-file=$LOGFILE --lin
 # P : combines --partial and --progress which are both useful for long xfers;
 #   : --partial allows large transfers to continue across interuption
 #   : --progress prints the progress of each file
-# R : relative; prints the whole path, except for anything higher than /./
+# R : relative; preserves the whole path, except for anything higher than /./
 # --chmod : set permmisions for the new directory
 # --stats : logs stats about the xfer
 # --log-file : file to store log to, can be useful for review
