@@ -1,0 +1,53 @@
+#!/bin/bash
+
+##############################################
+### "Simple" backup script using rsync
+### Backs up the contents of BDRI to a timestampted directory in DDIR
+##############################################
+
+# directory for backup - /./ is included for -R option
+BDIR='/srv/samba/share/./'
+# dir to backup
+DDIR='/media/ironwolf1/backups/blackbox/'
+# date files
+DATE1='/media/ironwolf1/backups/blackbox/date.txt'
+DATE2='/media/ironwolf1/backups/blackbox/date2.txt'
+
+# copy old date file
+yes | cp $DATE1 $DATE2
+# create new date file
+echo `date +"%F"` > $DATE1
+
+# create log file
+LOGFILE=$DDIR'rsync-'`cat $DATE1`'.log'
+touch $LOGFILE
+echo "" > $LOGFILE
+
+#################################################
+# This is where the magic happens
+#################################################
+
+# (don't) compress 
+#zip /srv/samba/share.zip /srv/samba/share/
+
+# kill any running rsync tasks
+# (if you don't do this, things can break)
+pkill -9 rsync
+
+# backup files
+rsync -avhPR --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r --stats --log-file=$LOGFILE --link-dest=${DDIR}Backup-`cat $DATE2` $BDIR ${DDIR}Backup-`cat $DATE1`/
+# Options:
+# a : 
+# v : verbose
+# h : human-redable; sizes are in KB/MB/GB rather than bytes
+# P : combines --partial and --progress which are both useful for long xfers;
+#   : --partial allows large transfers to continue across interuption
+#   : --progress prints the progress of each file
+# R : relative; prints the whole path, except for anything higher than /./
+# --chmod : set permmisions for the new directory
+# --stats : logs stats about the xfer
+# --log-file : file to store log to, can be useful for review
+# --link-dest : creates hard links for unchanged files in the current increment 
+#             : to their last change, allowing single-step restore
+
+cp $LOGFILE ${DDIR}Backup-`cat $DATE1`
