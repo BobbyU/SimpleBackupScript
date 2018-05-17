@@ -31,7 +31,9 @@ echo "" > $LOGFILE
 # This is where the magic happens
 #################################################
 
-# (don't) compress 
+# (don't) compress
+# zip is used before sync, because it retains file structure,
+# allowing for incremental backup
 #zip /srv/samba/share.zip /srv/samba/share/
 
 # kill any running rsync tasks
@@ -54,4 +56,5 @@ rsync -avhPR --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r --stats --log-file=$LOGFILE --lin
 # --link-dest : creates hard links for unchanged files in the current increment 
 #             : to their last change, allowing single-step restore
 
+# copy log file into backup dir
 cp $LOGFILE ${DDIR}Backup-`cat $DATE1`
