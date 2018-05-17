@@ -13,7 +13,10 @@ DDIR='/media/ironwolf1/backups/blackbox/'
 DATE1='/media/ironwolf1/backups/blackbox/date.txt'
 DATE2='/media/ironwolf1/backups/blackbox/date2.txt'
 
-# copy old date file
+# copy old date file - yes is used to confirm copy
+# touch is used in case the files don't exist yet
+touch $DATE1
+touch $DATE2
 yes | cp $DATE1 $DATE2
 # create new date file
 echo `date +"%F"` > $DATE1
