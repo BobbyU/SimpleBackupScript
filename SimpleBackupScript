@@ -13,6 +13,8 @@ DDIR='/media/ironwolf1/backups/blackbox/'
 # date files
 DATE1='/media/ironwolf1/backups/blackbox/date.txt'
 DATE2='/media/ironwolf1/backups/blackbox/date2.txt'
+# excluded directories -- currently other backups
+EXCLUDES='exclude.txt'
 
 # copy old date file - yes is used to confirm copy
 # touch is used in case the files don't exist yet
@@ -41,7 +43,7 @@ echo "" > $LOGFILE
 pkill -9 rsync
 
 # backup files
-rsync -avhPR --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r --stats --log-file=$LOGFILE --link-dest=${DDIR}Backup-`cat $DATE2` $BDIR ${DDIR}Backup-`cat $DATE1`/
+rsync -avhPR --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r --stats --exclude-from=${EXCLUDES} --log-file=$LOGFILE --link-dest=${DDIR}Backup-`cat $DATE2` $BDIR ${DDIR}Backup-`cat $DATE1`/
 # Options:
 # a : preserve groups, perms, times, etc
 # v : verbose
@@ -57,4 +59,4 @@ rsync -avhPR --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r --stats --log-file=$LOGFILE --lin
 #             : to their last change, allowing single-step restore
 
 # copy log file into backup dir
-cp $LOGFILE ${DDIR}Backup-`cat $DATE1`
+mv $LOGFILE ${DDIR}Backup-`cat $DATE1`
