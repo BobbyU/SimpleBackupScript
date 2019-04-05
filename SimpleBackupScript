@@ -52,6 +52,8 @@ rsync -avhPR --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r --stats --exclude-from=${EXCLUDES
 
 rsync -avhPR --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r --stats --exclude-from=${EXCLUDES} --log-file=$LOGFILE --link-dest=${DDIR}Backup-`cat $DATE2` $BDIR2 ${DDIR}Backup-`cat $DATE1`/
 
+rsync -avhPR --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r --stats --exclude-from=${EXCLUDES} --log-file=$LOGFILE --link-dest=${DDIR}Backup-`cat $DATE2` $BDIR3 ${DDIR}Backup-`cat $DATE1`/
+
 # Options:
 # a : preserve groups, perms, times, etc
 # v : verbose
