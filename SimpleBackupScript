@@ -10,6 +10,7 @@
 BDIR='/media/WDBlack3TB/share/./'
 BDIR1='/var/./www/'
 BDIR2='/etc/'
+BDIR3='/home/'
 # dir to backup
 DDIR='/media/ironwolf1/backups/blackbox/'
 # date files
